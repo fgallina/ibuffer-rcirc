@@ -1,0 +1,74 @@
+This package contains ibuffer-rcirc.el
+
+* Info
+
+  + Author: Fabián Ezequiel Gallina
+  + Contact: fgallina at gnu dot org
+  + Project homepage: https://github.com/fgallina/ibuffer-rcirc
+
+* Introduction
+
+Provides rcirc activity tracking and server filtering for ibuffer.
+
+[[file:screenshot.png]]
+
+* Usage
+
+To group buffers by IRC server:
+
+  ~M-x ibuffer-rcirc-set-filter-groups-by-server~
+
+To sort them by activity status (nick/keyword mentions, unread messages):
+
+  ~M-x ibuffer-do-sort-by-rcirc-activity-status~
+
+To filter by server:
+
+  ~M-x ibuffer-filter-by-rcirc-server~
+
+If you'd like to see activity status as a ~ibuffer~ column, include
+~rcirc-activity-status~ or ~rcirc-activity-status-mini~ in
+~ibuffer-formats~:
+
+#+BEGIN_SRC elisp
+(setq ibuffer-formats
+      '((mark modified read-only vc-status-mini " "
+              (name 18 18 :left :elide)
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              ;; (rcirc-activity-status 20 18 :left)
+              (rcirc-activity-status-mini 5 3 :center)
+              " "
+              filename-and-process)))
+#+END_SRC
+
+Finally, If you want to combine the server filter groups with your
+own, you can use ~ibuffer-rcirc-generate-filter-groups-by-server~.
+
+See the Commentary and Usage sections of ibuffer-rcirc.el for more
+details.
+
+* Requirements
+
+Should work with stock Emacs>=24 (and probably older).
+
+* Installation
+
+See ibuffer-rcirc.el header, or (preferred) install via ~M-x package-install~
+
+* Acknowledgments
+
+Kudos to @purcell by defining a nice way to leverage this kind of
+ibuffer extensions: https://github.com/purcell/ibuffer-vc
+
+* Bug Reports
+
+If you find a bug please report it in the github tracker.
+
+* License
+
+rcirc-buffer.el is free software under the GPL v3, see LICENSE file
+for details.
