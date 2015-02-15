@@ -48,21 +48,24 @@
 ;;   M-x ibuffer-filter-by-rcirc-server
 
 ;; If you'd like to see activity status as a `ibuffer' column, include
-;; `rcirc-activity-status' or `rcirc-activity-status-mini' in
-;; `ibuffer-formats':
+;; `rcirc-activity-status-one-char', `rcirc-activity-status' or
+;; `rcirc-activity-status-mini' in `ibuffer-formats':
 
 ;; (setq ibuffer-formats
-;;       '((mark modified read-only vc-status-mini " "
+;;       '((mark modified read-only rcirc-activity-status-one-char " "
 ;;               (name 18 18 :left :elide)
 ;;               " "
 ;;               (size 9 -1 :right)
 ;;               " "
 ;;               (mode 16 16 :left :elide)
 ;;               " "
-;;               ;; (rcirc-activity-status 20 18 :left)
-;;               (rcirc-activity-status-mini 5 3 :center)
-;;               " "
+;;               ;; (rcirc-activity-status 20 18 :left) " "
+;;               ;; (rcirc-activity-status-mini 5 3 :center) " "
 ;;               filename-and-process)))
+
+;; The `rcirc-activity-status-one-char' column is ideal to be appended
+;; to the default ibuffer first column (that shows the current mark
+;; and modified/read-only flags).  The example above does that.
 
 ;; Finally, If you want to combine the server filter groups with your
 ;; own, you can use `ibuffer-rcirc-generate-filter-groups-by-server'.
@@ -138,6 +141,14 @@ status and the cdr is a string for the full status."
                 'rcirc-window-configuration-change)
     (remove-hook 'window-configuration-change-hook
 		 'rcirc-window-configuration-change)))
+
+;;;###autoload (autoload 'ibuffer-make-column-rcirc-activity-status-one-char "ibuffer-rcirc")
+(define-ibuffer-column rcirc-activity-status-one-char
+  (:name "I")
+  (progn
+    (ibuffer-rcirc-track-minor-mode 1)
+    (car
+     (ibuffer-rcirc--activity-status-strings (current-buffer)))))
 
 ;;;###autoload (autoload 'ibuffer-make-column-rcirc-activity-status-mini "ibuffer-rcirc")
 (define-ibuffer-column rcirc-activity-status-mini

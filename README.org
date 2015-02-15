@@ -26,24 +26,27 @@ To filter by server:
 
   ~M-x ibuffer-filter-by-rcirc-server~
 
-If you'd like to see activity status as a ~ibuffer~ column, include
-~rcirc-activity-status~ or ~rcirc-activity-status-mini~ in
-~ibuffer-formats~:
+If you~d like to see activity status as a ~ibuffer~ column, include
+~rcirc-activity-status-one-char~, ~rcirc-activity-status~ or
+~rcirc-activity-status-mini~ in ~ibuffer-formats~:
 
 #+BEGIN_SRC elisp
 (setq ibuffer-formats
-      '((mark modified read-only vc-status-mini " "
+      '((mark modified read-only rcirc-activity-status-one-char " "
               (name 18 18 :left :elide)
               " "
               (size 9 -1 :right)
               " "
               (mode 16 16 :left :elide)
               " "
-              ;; (rcirc-activity-status 20 18 :left)
-              (rcirc-activity-status-mini 5 3 :center)
-              " "
+              ;; (rcirc-activity-status 20 18 :left) " "
+              ;; (rcirc-activity-status-mini 5 3 :center) " "
               filename-and-process)))
 #+END_SRC
+
+The ~rcirc-activity-status-one-char~ column is ideal to be appended to
+the default ibuffer first column (that shows the current mark and
+modified/read-only flags).  The example above does that.
 
 Finally, If you want to combine the server filter groups with your
 own, you can use ~ibuffer-rcirc-generate-filter-groups-by-server~.
